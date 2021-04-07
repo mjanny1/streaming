@@ -26,3 +26,25 @@ CREATE TABLE movies (
     
     CHECK (mpa_rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
 );
+
+-- Assume a subscription can only be charged monthly or yearly
+CREATE TABLE subscriptions (
+    subscription_id  VARCHAR(1),
+    "COST"           DECIMAL(5,2),
+    charged_annually CHAR(1),
+    
+    PRIMARY KEY (subscription_id)
+);
+
+CREATE TABLE accounts (
+    account_id       VARCHAR(10),
+    username         VARCHAR(20),
+    email            VARCHAR(40),
+    subscription_id  VARCHAR(1),
+    auto_renewal     CHAR(1),
+    expiration_date  DATE,
+    
+    PRIMARY KEY (account_id),
+    
+    FOREIGN KEY ( subscription_id ) REFERENCES subscriptions(subscription_id)
+);
