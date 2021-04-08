@@ -92,3 +92,17 @@ CREATE TABLE accounts (
     
     FOREIGN KEY ( subscription_id ) REFERENCES subscriptions(subscription_id)
 );
+
+CREATE TABLE Genres (
+                        Genre_ID  NUMBER(10) PRIMARY KEY,
+                        Comedy CHAR(1) ,
+                        Action CHAR(1) ,
+                        Romance CHAR(1) ,
+                        Horror CHAR(1),
+                        Drama CHAR(1),
+                        check (Comedy = 'Y' or comedy = 'N'),
+                        check (Action = 'Y' or Action = 'N'),
+   check (Romance = 'Y' or Romance = 'N'),
+   check (Horror = 'Y' or Horror = 'N'),
+   check (Drama = 'Y' or Drama = 'N')
+);
