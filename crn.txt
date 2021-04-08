@@ -1,0 +1,39 @@
+Containers & Microservices CRN: 14263 14260
+
+Computer Systems CRN: 14260
+
+AI&DSS in Hlth Informatics CRN: 14015
+
+Computer Systems CRN: 14260
+
+
+su1454
+
+18666355780
+
+8662783504
+
+18884940706
+
+Create an Account
+<a class="active" href="#about" style="color: black;background-color: white;padding-top: 15px;">Create an Account</a>
+
+http://teserex.com/lab/lab205/LegalBlockHome.html
+
+11:26
+// DB Params
+    private $host = "localhost";
+    private $db_name = "covidtest";
+    private $username = "hasshi";
+    private $password = "Satsuki1!";
+
+
+
+Required Courses for the M.S. Degree in Software Engineering:
+
+CSC 8000: Foundations of Algorithms and Data Structures
+CSC 8400: Computer Systems
+CSC 8490: Database Systems
+CSC 8540: Software Engineering
+CSC 8541: Requirements Engineering
+CSC 8542: Software Design and Evolution
