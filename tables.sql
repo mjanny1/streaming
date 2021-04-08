@@ -1,9 +1,33 @@
+DROP TABLE Genres;
 DROP TABLE Movies;
 DROP TABLE TV_Shows;
 DROP TABLE TV_Episodes;
 DROP TABLE Industry_Person;
 DROP TABLE Directs;
 DROP TABLE Awards;
+
+DROP TABLE subscriptions;
+DROP TABLE accounts;
+DROP TABLE Profile;
+DROP TABLE TV_Show_Awards;
+DROP Table Media_Preferences;
+DROP TABLE TV_Preferences;
+DROP TABLE views;
+DROP TABLE ActsIn;
+
+CREATE TABLE Genres (
+                        Genre_ID  NUMBER(10) PRIMARY KEY,
+                        Comedy CHAR(1) ,
+                        Action CHAR(1) ,
+                        Romance CHAR(1) ,
+                        Horror CHAR(1),
+                        Drama CHAR(1),
+                        check (Comedy = 'Y' or comedy = 'N'),
+                        check (Action = 'Y' or Action = 'N'),
+   check (Romance = 'Y' or Romance = 'N'),
+   check (Horror = 'Y' or Horror = 'N'),
+   check (Drama = 'Y' or Drama = 'N')
+);
 
 CREATE TABLE Movies (
    Media_ID  NUMBER(10) PRIMARY KEY,
@@ -16,8 +40,8 @@ CREATE TABLE Movies (
    Language VARCHAR(20),
    Description VARCHAR(300),
    
-   FOREIGN KEY (Genre_ID) REFERENCES Genre(Genre_ID),
-   CHECK (Year_Release > 1880)
+   FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
+   CHECK (Year_Released > 1880)
 );
 
 CREATE TABLE TV_Shows (
@@ -27,7 +51,7 @@ CREATE TABLE TV_Shows (
    Genre_ID NUMBER(10) NOT NULL,
    Description VARCHAR(300),
    
-   FOREIGN KEY (Genre_ID) REFERENCES Genre(Genre_ID)
+   FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID)
 );
 
 CREATE TABLE TV_Episodes (
@@ -92,29 +116,17 @@ CREATE TABLE accounts (
     
     FOREIGN KEY ( subscription_id ) REFERENCES subscriptions(subscription_id)
 );
-CREATE TABLE Genres (
-                        Genre_ID  NUMBER(10) PRIMARY KEY,
-                        Comedy CHAR(1) ,
-                        Action CHAR(1) ,
-                        Romance CHAR(1) ,
-                        Horror CHAR(1),
-                        Drama CHAR(1),
-                        check (Comedy = 'Y' or comedy = 'N'),
-                        check (Action = 'Y' or Action = 'N'),
-   check (Romance = 'Y' or Romance = 'N'),
-   check (Horror = 'Y' or Horror = 'N'),
-   check (Drama = 'Y' or Drama = 'N')
-);
+
 
 CREATE TABLE Profile (
-                         Profile_id       NUMBER(10) PRIMARY KEY,
-                         subscription_ID  VARCHAR(1),
+                         Profile_ID       NUMBER(10) PRIMARY KEY,
+                         Subscription_ID  VARCHAR(1),
                          Name            VARCHAR(40),
                          Age            INT,
                          Gender          CHAR(5),
-                         check (gender in ('M', 'F', 'OTHER')),
+                         check (Gender in ('M', 'F', 'OTHER')),
                          check (Age in (5, 100)),
-                         FOREIGN KEY ( subscription_id ) REFERENCES subscriptions(subscription_id)
+                         FOREIGN KEY ( Subscription_ID ) REFERENCES subscriptions(subscription_id)
 );
 
 
@@ -134,8 +146,8 @@ CREATE TABLE TV_Show_Awards (
 CREATE TABLE Media_Preferences (
                                    Profile_ID NUMBER(10),
                                    Media_ID NUMBER(10),
-                                   liked CHAR(1),
-                                   check (liked = 'Y' or Liked = 'N'),
+                                   Liked CHAR(1),
+                                   check (Liked = 'Y' or Liked = 'N'),
                                    FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
                                    FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID)
 );
@@ -146,7 +158,7 @@ CREATE TABLE TV_Preferences (
                                 liked CHAR(1),
                                 check (liked = 'Y' or Liked = 'N'),
                                 FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
-                                FOREIGN KEY (TV_Show_ID) REFERENCES TV_shows(TV_Show_ID)
+                                FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID)
 );
 
 
@@ -156,13 +168,12 @@ create table views (
                        Media_ID NUMBER(10),
                        TV_Show_ID NUMBER(10),
                        view_date Date,
-                       View_time Time,
+                       View_time NUMBER(7),
                        Location VARCHAR(50),
-                       houres_watched time,
+                       houres_watched NUMBER(7),
                        FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
                        FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID),
-                       FOREIGN KEY (TV_Show_ID) REFERENCES TV_shows(TV_Show_ID)
-
+                       FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID)
 );
 
 CREATE TABLE ActsIn (
