@@ -92,3 +92,83 @@ CREATE TABLE accounts (
     
     FOREIGN KEY ( subscription_id ) REFERENCES subscriptions(subscription_id)
 );
+CREATE TABLE Genres (
+                        Genre_ID  NUMBER(10) PRIMARY KEY,
+                        Comedy CHAR(1) ,
+                        Action CHAR(1) ,
+                        Romance CHAR(1) ,
+                        Horror CHAR(1),
+                        Drama CHAR(1),
+                        check (Comedy = 'Y' or comedy = 'N'),
+                        check (Action = 'Y' or Action = 'N'),
+   check (Romance = 'Y' or Romance = 'N'),
+   check (Horror = 'Y' or Horror = 'N'),
+   check (Drama = 'Y' or Drama = 'N')
+);
+
+CREATE TABLE Profile (
+                         Profile_id       NUMBER(10) PRIMARY KEY,
+                         subscription_ID  VARCHAR(1),
+                         Name            VARCHAR(40),
+                         Age            INT,
+                         Gender          CHAR(5),
+                         check (gender in ('M', 'F', 'OTHER')),
+                         check (Age in (5, 100)),
+                         FOREIGN KEY ( subscription_id ) REFERENCES subscriptions(subscription_id)
+);
+
+
+
+CREATE TABLE TV_Show_Awards (
+                                TVAward_ID NUMBER(10) PRIMARY KEY,
+                                Award_Title VARCHAR(50),
+                                Name_of_Organization VARCHAR(50),
+                                Year_of_Award NUMBER(4),
+                                TV_show_ID NUMBER(10) NOT NULL,
+
+                                FOREIGN KEY (TV_show_ID) REFERENCES TV_Shows(TV_show_ID),
+                                CHECK (Year_of_Award > 1880)
+);
+
+
+CREATE TABLE Media_Preferences (
+                                   Profile_ID NUMBER(10),
+                                   Media_ID NUMBER(10),
+                                   liked CHAR(1),
+                                   check (liked = 'Y' or Liked = 'N'),
+                                   FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
+                                   FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID)
+);
+
+CREATE TABLE TV_Preferences (
+                                Profile_ID NUMBER(10),
+                                TV_Show_ID NUMBER(10),
+                                liked CHAR(1),
+                                check (liked = 'Y' or Liked = 'N'),
+                                FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
+                                FOREIGN KEY (TV_Show_ID) REFERENCES TV_shows(TV_Show_ID)
+);
+
+
+create table views (
+                       View_ID Number(10) primary key,
+                       Profile_ID NUMBER(10),
+                       Media_ID NUMBER(10),
+                       TV_Show_ID NUMBER(10),
+                       view_date Date,
+                       View_time Time,
+                       Location VARCHAR(50),
+                       houres_watched time,
+                       FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
+                       FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID),
+                       FOREIGN KEY (TV_Show_ID) REFERENCES TV_shows(TV_Show_ID)
+
+);
+
+CREATE TABLE ActsIn (
+                        Industry_Person_ID NUMBER(10) NOT NULL,
+                        Media_ID NUMBER(10) NOT NULL,
+
+                        FOREIGN KEY (Industry_Person_ID) REFERENCES Industry_Person(Industry_Person_ID),
+                        FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID)
+);
