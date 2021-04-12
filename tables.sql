@@ -18,11 +18,11 @@ DROP TABLE Genres;
 
 CREATE TABLE Genres (
     Genre_ID  NUMBER(10) PRIMARY KEY,
-    Comedy    CHAR(1) ,
-    Action    CHAR(1) ,
-    Romance   CHAR(1) ,
-    Horror    CHAR(1),
-    Drama     CHAR(1),
+    Comedy    CHAR(1)    NOT NULL,
+    Action    CHAR(1)    NOT NULL,
+    Romance   CHAR(1)    NOT NULL,
+    Horror    CHAR(1)    NOT NULL,
+    Drama     CHAR(1)    NOT NULL,
 
     check (Comedy = 'Y' or comedy = 'N'),
     check (Action = 'Y' or Action = 'N'),
@@ -34,13 +34,13 @@ CREATE TABLE Genres (
 
 CREATE TABLE Movies (
     Media_ID      NUMBER(10)   PRIMARY KEY,
-    Name          VARCHAR(50),
-    Year_Released NUMBER(4),
+    Name          VARCHAR(50)  NOT NULL,
+    Year_Released NUMBER(4)    NOT NULL,
     IMDB_Rating   DECIMAL(3,1),
-    MPA_Rating    NUMBER(5),
+    MPA_Rating    NUMBER(5)    NOT NULL,
     Genre_ID      NUMBER(10)   NOT NULL,
-    Length        NUMBER(6),
-    Language      VARCHAR(20),
+    Length        NUMBER(6)    NOT NULL,
+    Language      VARCHAR(20)  NOT NULL,
     Description   VARCHAR(300),
 
     FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
@@ -54,7 +54,7 @@ CREATE TABLE Movies (
 
 CREATE TABLE TV_Shows (
     TV_Show_ID  NUMBER(10)    PRIMARY KEY,
-    Name        VARCHAR(50),
+    Name        VARCHAR(50)   NOT NULL,
     IMDB_Rating DECIMAL(3,1),
     Genre_ID    NUMBER(10)    NOT NULL,
     Description VARCHAR(300),
@@ -68,16 +68,16 @@ CREATE TABLE TV_Shows (
 
 CREATE TABLE TV_Episodes (
     Media_ID               NUMBER(10)   PRIMARY KEY,
-    TV_Show_ID             NUMBER(10),
+    TV_Show_ID             NUMBER(10)   NOT NULL,
     Name                   VARCHAR(50),
-    Year_Released          NUMBER(4),
+    Date_Released          DATE         NOT NULL,
     IMDB_Rating            DECIMAL(3,1),
-    TV_Parental_Guidelines VARCHAR(4),
-    Length                 NUMBER(6),
-    Language               VARCHAR(20),
+    TV_Parental_Guidelines VARCHAR(4)   NOT NULL,
+    Length                 NUMBER(6)    NOT NULL,
+    Language               VARCHAR(20)  NOT NULL,
     Description            VARCHAR(300),
-    Season_Number          INTEGER,
-    Season_Episode_Number  INTEGER,
+    Season_Number          INTEGER      NOT NULL,
+    Season_Episode_Number  INTEGER      NOT NULL,
 
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
 
@@ -91,8 +91,8 @@ CREATE TABLE TV_Episodes (
 
 CREATE TABLE Industry_Person (
     Industry_Person_ID NUMBER(10)  PRIMARY KEY,
-    first_Name         VARCHAR(20) NOT NULL,
-    last_Name          VARCHAR(20) NOT NULL
+    First_Name         VARCHAR(20) NOT NULL,
+    Last_Name          VARCHAR(20) NOT NULL
 );
 
 
@@ -101,15 +101,15 @@ CREATE TABLE Directs (
     Media_ID           NUMBER(10) NOT NULL,
 
     FOREIGN KEY (Industry_Person_ID) REFERENCES Industry_Person(Industry_Person_ID),
-    FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID)
+    FOREIGN KEY (Media_ID)           REFERENCES Movies(Media_ID)
 );
 
 
 CREATE TABLE Awards (
     Award_ID             NUMBER(10)    PRIMARY KEY,
-    Award_Title          VARCHAR(50),
-    Name_of_Organization VARCHAR(50),
-    Year_of_Award        NUMBER(4),
+    Award_Title          VARCHAR(50)   NOT NULL,
+    Name_of_Organization VARCHAR(50)   NOT NULL,
+    Year_of_Award        NUMBER(4)     NOT NULL,
     Media_ID             NUMBER(10)    NOT NULL,
 
     FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID),
@@ -121,18 +121,18 @@ CREATE TABLE Awards (
 -- Assume a subscription can only be charged monthly or yearly
 CREATE TABLE Subscriptions (
     Subscription_ID  VARCHAR(1)    PRIMARY KEY,
-    Cost             DECIMAL(5,2),
-    Charged_Annually CHAR(1)
+    Cost             DECIMAL(5,2)  NOT NULL,
+    Charged_Annually CHAR(1)       NOT NULL
 );
 
 
 CREATE TABLE Accounts (
     Account_ID       VARCHAR(10)   PRIMARY KEY,
-    Username         VARCHAR(20),
-    Email            VARCHAR(40),
-    Subscription_ID  VARCHAR(1),
-    Auto_Renewal     CHAR(1),
-    Expiration_Date  DATE,
+    Username         VARCHAR(20)   NOT NULL,
+    Email            VARCHAR(40)   NOT NULL,
+    Subscription_ID  VARCHAR(1)    NOT NULL,
+    Auto_Renewal     CHAR(1)       NOT NULL,
+    Expiration_Date  DATE          NOT NULL,
     
     FOREIGN KEY ( Subscription_ID ) REFERENCES Subscriptions(Subscription_ID)
 );
@@ -140,12 +140,12 @@ CREATE TABLE Accounts (
 
 CREATE TABLE Profile (
     Profile_ID       NUMBER(10)   PRIMARY KEY,
-    Subscription_ID  VARCHAR(1),
-    Name             VARCHAR(40),
-    Age              INT,
+    Account_ID       VARCHAR(10)  NOT NULL,
+    Name             VARCHAR(40)  NOT NULL,
+    Age              INTEGER,
     Gender           CHAR(5),
 
-    FOREIGN KEY ( Subscription_ID ) REFERENCES Subscriptions(Subscription_ID),
+    FOREIGN KEY ( Account_ID ) REFERENCES Account(Account_ID),
 
     check (Gender in ('M', 'F', 'OTHER')),
     check (Age in (5, 100))
@@ -155,10 +155,10 @@ CREATE TABLE Profile (
 
 CREATE TABLE TV_Show_Awards (
     TVAward_ID           NUMBER(10)   PRIMARY KEY,
-    Award_Title          VARCHAR(50),
-    Name_of_Organization VARCHAR(50),
-    Year_of_Award        NUMBER(4),
-    TV_show_ID           NUMBER(10)    NOT NULL,
+    Award_Title          VARCHAR(50)  NOT NULL,
+    Name_of_Organization VARCHAR(50)  NOT NULL,
+    Year_of_Award        NUMBER(4)    NOT NULL,
+    TV_show_ID           NUMBER(10)   NOT NULL,
 
     FOREIGN KEY (TV_show_ID) REFERENCES TV_Shows(TV_show_ID),
 
@@ -167,19 +167,19 @@ CREATE TABLE TV_Show_Awards (
 
 
 CREATE TABLE Media_Preferences (
-    Profile_ID NUMBER(10),
-    Media_ID   NUMBER(10),
+    Profile_ID NUMBER(10)  NOT NULL,
+    Media_ID   NUMBER(10)  NOT NULL,
     Liked      CHAR(1),
 
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
-    FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID),
+    FOREIGN KEY (Media_ID)   REFERENCES Movies(Media_ID),
 
     check (Liked = 'Y' or Liked = 'N')
 );
 
 CREATE TABLE TV_Preferences (
-    Profile_ID NUMBER(10),
-    TV_Show_ID NUMBER(10),
+    Profile_ID NUMBER(10)  NOT NULL,
+    TV_Show_ID NUMBER(10)  NOT NULL,
     liked      CHAR(1),
 
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
@@ -189,17 +189,16 @@ CREATE TABLE TV_Preferences (
 );
 
 
-create table Views (
-    View_ID        NUMBER(10)  PRIMARY KEY,
-    Profile_ID     NUMBER(10),
-    Media_ID       NUMBER(10),
-    TV_Show_ID     NUMBER(10),
-    View_Date      DATE,
-    View_Time      NUMBER(7),
-    Location       VARCHAR(50),
-    Hours_Watched  NUMBER(7),
+CREATE TABLE Views (
+    View_ID          NUMBER(10)  PRIMARY KEY,
+    Profile_ID       NUMBER(10)  NOT NULL,
+    Media_ID         NUMBER(10)  NOT NULL,
+    Time             DATETIME    NOT NULL,
+    Location         VARCHAR(50),
+    Seconds_Watched  INTEGER     NOT NULL,
+
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
-    FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID),
+    FOREIGN KEY (Media_ID)   REFERENCES Movies(Media_ID),
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID)
 );
 
