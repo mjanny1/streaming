@@ -36,27 +36,33 @@ CREATE TABLE Movies (
     Media_ID      NUMBER(10)   PRIMARY KEY,
     Name          VARCHAR(50),
     Year_Released NUMBER(4),
-    IMDB_Rating   NUMBER(5),
+    IMDB_Rating   DECIMAL(3,1),
     MPA_Rating    NUMBER(5),
     Genre_ID      NUMBER(10)   NOT NULL,
     Length        NUMBER(6),
     Language      VARCHAR(20),
     Description   VARCHAR(300),
-   
+
     FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
 
-    CHECK (Year_Released > 1880)
+    CHECK (Year_Released > 1880),
+    CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French')),
+    CHECK (IMDB_Rating <= 10),
+    CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
 );
 
 
 CREATE TABLE TV_Shows (
     TV_Show_ID  NUMBER(10)    PRIMARY KEY,
     Name        VARCHAR(50),
-    IMDB_Rating NUMBER(5),
+    IMDB_Rating DECIMAL(3,1),
     Genre_ID    NUMBER(10)    NOT NULL,
     Description VARCHAR(300),
-   
-    FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID)
+    Seasons     INTEGER       NOT NULL,
+
+    FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
+
+    CHECK (IMDB_Rating <= 10)
 );
 
 
@@ -65,15 +71,21 @@ CREATE TABLE TV_Episodes (
     TV_Show_ID             NUMBER(10),
     Name                   VARCHAR(50),
     Year_Released          NUMBER(4),
-    IMDB_Rating            NUMBER(5),
+    IMDB_Rating            DECIMAL(3,1),
     TV_Parental_Guidelines VARCHAR(4),
     Length                 NUMBER(6),
     Language               VARCHAR(20),
     Description            VARCHAR(300),
-    Season_Number          NUMBER(3),
-    Season_Episode_Number  NUMBER(3),
+    Season_Number          INTEGER,
+    Season_Episode_Number  INTEGER,
 
-    CHECK (Year_Released > 1880)  
+    FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
+
+    CHECK (Year_Released > 1880),
+    CHECK (IMDB_Rating <= 10),
+    CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA')),
+    CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
+    --CHECK (Season_Number <= TV_Shows.Seasons)
 );
 
 
