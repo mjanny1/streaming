@@ -35,7 +35,7 @@ CREATE TABLE Genres (
 CREATE TABLE Movies (
     Media_ID      NUMBER(10)   PRIMARY KEY,
     Name          VARCHAR(50)  NOT NULL,
-    Year_Released NUMBER(4)    NOT NULL,
+    Date_Released DATE         NOT NULL,
     IMDB_Rating   DECIMAL(3,1),
     MPA_Rating    NUMBER(5)    NOT NULL,
     Genre_ID      NUMBER(10)   NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE Movies (
 
     FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
 
-    CHECK (Year_Released > 1880),
+    CHECK (Date_Released > '1880-01-01'),
     CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French')),
     CHECK (IMDB_Rating <= 10),
     CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
@@ -81,7 +81,7 @@ CREATE TABLE TV_Episodes (
 
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
 
-    CHECK (Year_Released > 1880),
+    CHECK (Date_Released > '1880-01-01'),
     CHECK (IMDB_Rating <= 10),
     CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA')),
     CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
@@ -145,7 +145,7 @@ CREATE TABLE Profile (
     Age              INTEGER,
     Gender           CHAR(5),
 
-    FOREIGN KEY ( Account_ID ) REFERENCES Account(Account_ID),
+    FOREIGN KEY ( Account_ID ) REFERENCES Accounts(Account_ID),
 
     check (Gender in ('M', 'F', 'OTHER')),
     check (Age in (5, 100))
