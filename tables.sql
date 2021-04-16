@@ -45,7 +45,7 @@ CREATE TABLE Movies (
 
     FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
 
-    --CHECK (Date_Released > '1880-01-01'),
+    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy')),
     CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French')),
     CHECK (IMDB_Rating <= 10),
     CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
@@ -81,7 +81,7 @@ CREATE TABLE TV_Episodes (
 
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
 
-    --CHECK (Date_Released > '1880-01-01'),
+    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy')),
     CHECK (IMDB_Rating <= 10),
     CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA')),
     CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
