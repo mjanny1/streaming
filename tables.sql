@@ -1,5 +1,4 @@
 -- Should work in this order
-DROP TABLE Accounts;
 DROP TABLE TV_Show_Awards;
 DROP Table Media_Preferences;
 DROP TABLE TV_Preferences;
@@ -8,12 +7,13 @@ DROP TABLE ActsIn;
 DROP TABLE Directs;
 DROP TABLE Awards;
 DROP TABLE Profile;
-DROP TABLE Subscriptions;
 DROP TABLE Industry_Person;
 DROP TABLE TV_Episodes;
 DROP TABLE TV_Shows;
 DROP TABLE Movies;
 DROP TABLE Genres;
+DROP TABLE Accounts;
+DROP TABLE Subscriptions;
 
 
 CREATE TABLE Genres (
@@ -45,7 +45,7 @@ CREATE TABLE Movies (
 
     FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
 
-    CHECK (Date_Released > '1880-01-01'),
+    --CHECK (Date_Released > '1880-01-01'),
     CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French')),
     CHECK (IMDB_Rating <= 10),
     CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
@@ -81,7 +81,7 @@ CREATE TABLE TV_Episodes (
 
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
 
-    CHECK (Date_Released > '1880-01-01'),
+    --CHECK (Date_Released > '1880-01-01'),
     CHECK (IMDB_Rating <= 10),
     CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA')),
     CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
@@ -193,13 +193,12 @@ CREATE TABLE Views (
     View_ID          NUMBER(10)  PRIMARY KEY,
     Profile_ID       NUMBER(10)  NOT NULL,
     Media_ID         NUMBER(10)  NOT NULL,
-    Time             DATETIME    NOT NULL,
+    Time             DATE        NOT NULL,
     Location         VARCHAR(50),
     Seconds_Watched  INTEGER     NOT NULL,
 
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
-    FOREIGN KEY (Media_ID)   REFERENCES Movies(Media_ID),
-    FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID)
+    FOREIGN KEY (Media_ID)   REFERENCES Movies(Media_ID)
 );
 
 CREATE TABLE ActsIn (
