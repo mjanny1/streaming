@@ -9,11 +9,13 @@ DROP TABLE Awards;
 DROP TABLE Profile;
 DROP TABLE Industry_Person;
 DROP TABLE TV_Episodes;
-DROP TABLE TV_Shows;
 DROP TABLE Movies;
 DROP TABLE Genres;
+DROP TABLE TV_Genres;
 DROP TABLE Accounts;
 DROP TABLE Subscriptions;
+DROP TABLE TV_Shows;
+DROP TABLE Media;
 
 
 CREATE TABLE  Media  (
@@ -26,8 +28,8 @@ CREATE TABLE  Media  (
     Language       VARCHAR(20)  NOT NULL,
     Description    VARCHAR(300),
 
-    CHECK (media_Type IN ('Movie', 'Episode')),
-    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy'))
+    CHECK (Media_Type IN ('Movie', 'Episode')),
+    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy')),
     CHECK (IMDB_Rating <= 10),
     CHECK (LANGUAGE  IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
 );
@@ -56,12 +58,13 @@ CREATE TABLE TV_Shows (
 CREATE TABLE TV_Episodes (
     --Mid                    INTEGER      generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this?
     Media_ID               VARCHAR(10)  NOT NULL ,
-    TV_Show_ID             NUMBER(10)   NOT NULL,
+    TV_Show_ID             INTEGER      NOT NULL,
     TV_Parental_Guidelines VARCHAR(4)   NOT NULL,
     Season_Number          INTEGER      NOT NULL,
     Season_Episode_Number  INTEGER      NOT NULL,
 
-    FOREIGN KEY ( Media_ID ) REFERENCES Media(Media_ID),
+    FOREIGN KEY ( Media_ID )   REFERENCES Media(Media_ID),
+    FOREIGN KEY ( TV_Show_ID ) REFERENCES TV_Shows(TV_Show_ID),
 
     CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA'))
     --CHECK (Season_Number <= TV_Shows.Seasons)
@@ -87,12 +90,12 @@ CREATE TABLE Genres (
 
 
 CREATE TABLE TV_Genres (
-    TV_Show_ID  VARCHAR(10) NOT NULL,
-    Comedy    CHAR(1)       NOT NULL,
-    Action    CHAR(1)       NOT NULL,
-    Romance   CHAR(1)       NOT NULL,
-    Horror    CHAR(1)       NOT NULL,
-    Drama     CHAR(1)       NOT NULL,
+    TV_Show_ID INTEGER  NOT NULL,
+    Comedy     CHAR(1)  NOT NULL,
+    Action     CHAR(1)  NOT NULL,
+    Romance    CHAR(1)  NOT NULL,
+    Horror     CHAR(1)  NOT NULL,
+    Drama      CHAR(1)  NOT NULL,
 
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows (TV_Show_ID),
 
@@ -112,11 +115,11 @@ CREATE TABLE Industry_Person (
 
 
 CREATE TABLE Directs (
-    Industry_Person_ID NUMBER(10) NOT NULL,
-    Media_ID           NUMBER(10) NOT NULL,
+    Industry_Person_ID NUMBER(10)  NOT NULL,
+    Media_ID           VARCHAR(10) NOT NULL,
 
     FOREIGN KEY (Industry_Person_ID) REFERENCES Industry_Person(Industry_Person_ID),
-    FOREIGN KEY (Media_ID)           REFERENCES Movies(Media_ID)
+    FOREIGN KEY (Media_ID)           REFERENCES Media(Media_ID)
 );
 
 
@@ -125,9 +128,9 @@ CREATE TABLE Awards (
     Award_Title          VARCHAR(50)   NOT NULL,
     Name_of_Organization VARCHAR(50)   NOT NULL,
     Year_of_Award        NUMBER(4)     NOT NULL,
-    Media_ID             NUMBER(10)    NOT NULL,
+    Media_ID             VARCHAR(10)   NOT NULL,
 
-    FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID),
+    FOREIGN KEY (Media_ID) REFERENCES Media(Media_ID),
 
     CHECK (Year_of_Award > 1880)
 );
@@ -182,12 +185,12 @@ CREATE TABLE TV_Show_Awards (
 
 
 CREATE TABLE Media_Preferences (
-    Profile_ID NUMBER(10)  NOT NULL,
-    Media_ID   NUMBER(10)  NOT NULL,
+    Profile_ID NUMBER(10)   NOT NULL,
+    Media_ID   VARCHAR(10)  NOT NULL,
     Liked      CHAR(1),
 
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
-    FOREIGN KEY (Media_ID)   REFERENCES Movies(Media_ID),
+    FOREIGN KEY (Media_ID)   REFERENCES Media(Media_ID),
 
     check (Liked = 'Y' or Liked = 'N')
 );
@@ -195,31 +198,31 @@ CREATE TABLE Media_Preferences (
 CREATE TABLE TV_Preferences (
     Profile_ID NUMBER(10)  NOT NULL,
     TV_Show_ID NUMBER(10)  NOT NULL,
-    liked      CHAR(1),
+    Liked      CHAR(1),
 
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
     FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
 
-    check (liked = 'Y' or Liked = 'N')
+    CHECK (liked = 'Y' or Liked = 'N')
 );
 
 
 CREATE TABLE Views (
-    View_ID          NUMBER(10)  PRIMARY KEY,
-    Profile_ID       NUMBER(10)  NOT NULL,
-    Media_ID         NUMBER(10)  NOT NULL,
-    Time             DATE        NOT NULL,
+    View_ID          NUMBER(10)   PRIMARY KEY,
+    Profile_ID       NUMBER(10)   NOT NULL,
+    Media_ID         VARCHAR(10)  NOT NULL,
+    Time             DATE         NOT NULL,
     Location         VARCHAR(50),
-    Seconds_Watched  INTEGER     NOT NULL,
+    Seconds_Watched  INTEGER      NOT NULL,
 
     FOREIGN KEY (Profile_ID) REFERENCES Profile(Profile_ID),
-    FOREIGN KEY (Media_ID)   REFERENCES Movies(Media_ID)
+    FOREIGN KEY (Media_ID)   REFERENCES Media(Media_ID)
 );
 
 CREATE TABLE ActsIn (
-    Industry_Person_ID NUMBER(10) NOT NULL,
-    Media_ID           NUMBER(10) NOT NULL,
+    Industry_Person_ID NUMBER(10)  NOT NULL,
+    Media_ID           VARCHAR(10) NOT NULL,
 
     FOREIGN KEY (Industry_Person_ID) REFERENCES Industry_Person(Industry_Person_ID),
-    FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID)
+    FOREIGN KEY (Media_ID)           REFERENCES Media(Media_ID)
 );
