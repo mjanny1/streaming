@@ -16,13 +16,67 @@ DROP TABLE Accounts;
 DROP TABLE Subscriptions;
 
 
+CREATE TABLE  Media  (
+    Media_ID       VARCHAR(10)  PRIMARY KEY,
+    Media_Type     VARCHAR(7)   NOT NULL,
+    Name           VARCHAR(60)  NOT NULL,
+    Date_Released  DATE         NOT NULL,
+    IMDB_Rating    DECIMAL(3,1), 
+    Length_Seconds INTEGER      NOT NULL,
+    Language       VARCHAR(20)  NOT NULL,
+    Description    VARCHAR(300),
+
+    CHECK (media_Type IN ('Movie', 'Episode')),
+    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy'))
+    CHECK (IMDB_Rating <= 10),
+    CHECK (LANGUAGE  IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
+);
+
+
+CREATE TABLE Movies (
+    --Mid           INTEGER      generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this? Maybe we want to put this in Media
+    Media_ID      VARCHAR(10)  NOT NULL,
+    MPA_Rating    NUMBER(5)    NOT NULL,
+
+    FOREIGN KEY ( Media_ID ) REFERENCES Media(Media_ID),
+
+    CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
+);
+
+
+CREATE TABLE TV_Shows (
+    TV_Show_ID  INTEGER generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this?
+    IMDB_Rating DECIMAL(3,1),
+    Seasons     INTEGER       NOT NULL,
+
+    CHECK (IMDB_Rating <= 10)
+);
+ 
+
+CREATE TABLE TV_Episodes (
+    --Mid                    INTEGER      generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this?
+    Media_ID               VARCHAR(10)  NOT NULL ,
+    TV_Show_ID             NUMBER(10)   NOT NULL,
+    TV_Parental_Guidelines VARCHAR(4)   NOT NULL,
+    Season_Number          INTEGER      NOT NULL,
+    Season_Episode_Number  INTEGER      NOT NULL,
+
+    FOREIGN KEY ( Media_ID ) REFERENCES Media(Media_ID),
+
+    CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA'))
+    --CHECK (Season_Number <= TV_Shows.Seasons)
+);
+
+
 CREATE TABLE Genres (
-    Genre_ID  NUMBER(10) PRIMARY KEY,
-    Comedy    CHAR(1)    NOT NULL,
-    Action    CHAR(1)    NOT NULL,
-    Romance   CHAR(1)    NOT NULL,
-    Horror    CHAR(1)    NOT NULL,
-    Drama     CHAR(1)    NOT NULL,
+    Media_ID  VARCHAR(10) NOT NULL,
+    Comedy    CHAR(1)     NOT NULL,
+    Action    CHAR(1)     NOT NULL,
+    Romance   CHAR(1)     NOT NULL,
+    Horror    CHAR(1)     NOT NULL,
+    Drama     CHAR(1)     NOT NULL,
+
+    FOREIGN KEY (Media_ID) REFERENCES Media (Media_ID),
 
     check (Comedy = 'Y' or comedy = 'N'),
     check (Action = 'Y' or Action = 'N'),
@@ -32,60 +86,21 @@ CREATE TABLE Genres (
 );
 
 
-CREATE TABLE Movies (
-    Media_ID      NUMBER(10)   PRIMARY KEY,
-    Name          VARCHAR(50)  NOT NULL,
-    Date_Released DATE         NOT NULL,
-    IMDB_Rating   DECIMAL(3,1),
-    MPA_Rating    NUMBER(5)    NOT NULL,
-    Genre_ID      NUMBER(10)   NOT NULL,
-    Length        NUMBER(6)    NOT NULL,
-    Language      VARCHAR(20)  NOT NULL,
-    Description   VARCHAR(300),
+CREATE TABLE TV_Genres (
+    TV_Show_ID  VARCHAR(10) NOT NULL,
+    Comedy    CHAR(1)       NOT NULL,
+    Action    CHAR(1)       NOT NULL,
+    Romance   CHAR(1)       NOT NULL,
+    Horror    CHAR(1)       NOT NULL,
+    Drama     CHAR(1)       NOT NULL,
 
-    FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
+    FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows (TV_Show_ID),
 
-    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy')),
-    CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French')),
-    CHECK (IMDB_Rating <= 10),
-    CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
-);
-
-
-CREATE TABLE TV_Shows (
-    TV_Show_ID  NUMBER(10)    PRIMARY KEY,
-    Name        VARCHAR(50)   NOT NULL,
-    IMDB_Rating DECIMAL(3,1),
-    Genre_ID    NUMBER(10)    NOT NULL,
-    Description VARCHAR(300),
-    Seasons     INTEGER       NOT NULL,
-
-    FOREIGN KEY (Genre_ID) REFERENCES Genres(Genre_ID),
-
-    CHECK (IMDB_Rating <= 10)
-);
-
-
-CREATE TABLE TV_Episodes (
-    Media_ID               NUMBER(10)   PRIMARY KEY,
-    TV_Show_ID             NUMBER(10)   NOT NULL,
-    Name                   VARCHAR(50),
-    Date_Released          DATE         NOT NULL,
-    IMDB_Rating            DECIMAL(3,1),
-    TV_Parental_Guidelines VARCHAR(4)   NOT NULL,
-    Length                 NUMBER(6)    NOT NULL,
-    Language               VARCHAR(20)  NOT NULL,
-    Description            VARCHAR(300),
-    Season_Number          INTEGER      NOT NULL,
-    Season_Episode_Number  INTEGER      NOT NULL,
-
-    FOREIGN KEY (TV_Show_ID) REFERENCES TV_Shows(TV_Show_ID),
-
-    CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy')),
-    CHECK (IMDB_Rating <= 10),
-    CHECK (TV_Parental_Guidelines IN ('TV-Y', 'TV-Y7', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA')),
-    CHECK (Language IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
-    --CHECK (Season_Number <= TV_Shows.Seasons)
+    check (Comedy = 'Y' or comedy = 'N'),
+    check (Action = 'Y' or Action = 'N'),
+    check (Romance = 'Y' or Romance = 'N'),
+    check (Horror = 'Y' or Horror = 'N'),
+    check (Drama = 'Y' or Drama = 'N')
 );
 
 
@@ -207,52 +222,4 @@ CREATE TABLE ActsIn (
 
     FOREIGN KEY (Industry_Person_ID) REFERENCES Industry_Person(Industry_Person_ID),
     FOREIGN KEY (Media_ID) REFERENCES Movies(Media_ID)
-);
-           
-CREATE TABLE  Media  (
-   Media_ID       VARCHAR(10) NOT NULL,
-   Media_Type     VARCHAR(7) NOT NULL,
-   NAME        VARCHAR(60) NOT NULL,
-   Date_Released  DATE,
-   Length_Seconds INTEGER NOT NULL,
-   LANGUAGE    VARCHAR(20) NOT NULL,
-   DESCRIPTION VARCHAR(300) NOT NULL,
-   PRIMARY KEY ( Media_ID ),
-   CHECK (media_Type IN ('Movie', 'Episode')),
-   CHECK (Date_Released > to_date('01-01-1880', 'dd-mm-yyyy'))
-   CHECK (LANGUAGE  IN ('English', 'Spanish', 'Hindi', 'German', 'French'))
-);
-
-CREATE TABLE Movies (
-    Mid Integer generated as identity (start with 100 increment by 1) not null primary key,
-    Media_ID      VARCHAR(10)   NOT NULL ,
-    IMDB_Rating   DECIMAL(3,1),
-    MPA_Rating    NUMBER(5)    NOT NULL,
-    Genre_ID      NUMBER(10)   NOT NULL,
-    FOREIGN KEY ( Media_id ) REFERENCES Media(Media_id),
-    CHECK (IMDB_Rating <= 10),
-    CHECK (MPA_Rating IN ('G', 'PG', 'PG-13', 'R', 'NR'))
-);
-
-CREATE TABLE Genres (
-    Media_ID      VARCHAR(10)   NOT NULL primary key,
-    Comedy    CHAR(1)    NOT NULL,
-    Action    CHAR(1)    NOT NULL,
-    Romance   CHAR(1)    NOT NULL,
-    Horror    CHAR(1)    NOT NULL,
-    Drama     CHAR(1)    NOT NULL,
-    check (Comedy = 'Y' or comedy = 'N'),
-    check (Action = 'Y' or Action = 'N'),
-    check (Romance = 'Y' or Romance = 'N'),
-    check (Horror = 'Y' or Horror = 'N'),
-    check (Drama = 'Y' or Drama = 'N')
-);
-
-CREATE TABLE TV_Shows (
-    Tid Integer generated as identity (start with 100 increment by 1) not null primary key,
-    Media_ID      VARCHAR(10)   NOT NULL,
-    IMDB_Rating DECIMAL(3,1),
-    Seasons     INTEGER       NOT NULL,
-    FOREIGN KEY ( Media_id ) REFERENCES Media(Media_id),
-    CHECK (IMDB_Rating <= 10)
 );
