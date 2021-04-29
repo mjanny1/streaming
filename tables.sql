@@ -48,6 +48,7 @@ CREATE TABLE Movies (
 
 CREATE TABLE TV_Shows (
     TV_Show_ID  INTEGER generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this?
+    Name        VARCHAR(60)   NOT NULL,
     IMDB_Rating DECIMAL(3,1),
     Seasons     INTEGER       NOT NULL,
 
