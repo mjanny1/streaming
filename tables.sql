@@ -36,9 +36,8 @@ CREATE TABLE  Media  (
 
 
 CREATE TABLE Movies (
-    --Mid           INTEGER      generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this? Maybe we want to put this in Media
     Media_ID      VARCHAR(10)  NOT NULL,
-    MPA_Rating    NUMBER(5)    NOT NULL,
+    MPA_Rating    CHAR(8)      NOT NULL,
 
     FOREIGN KEY ( Media_ID ) REFERENCES Media(Media_ID),
 
@@ -57,7 +56,6 @@ CREATE TABLE TV_Shows (
  
 
 CREATE TABLE TV_Episodes (
-    --Mid                    INTEGER      generated as identity (start with 100 increment by 1) not null primary key, -- Do we need this?
     Media_ID               VARCHAR(10)  NOT NULL ,
     TV_Show_ID             INTEGER      NOT NULL,
     TV_Parental_Guidelines VARCHAR(4)   NOT NULL,
@@ -167,7 +165,7 @@ CREATE TABLE Profile (
     FOREIGN KEY ( Account_ID ) REFERENCES Accounts(Account_ID),
 
     check (Gender in ('M', 'F', 'OTHER')),
-    check (Age in (5, 100))
+    check (Age between 5 and 100)
 );
 
 
