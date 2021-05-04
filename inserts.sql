@@ -5,6 +5,26 @@ INSERT INTO Media VALUES('M0003', 'Movie', 'Finding Nemo', to_date('01-02-1998',
 INSERT INTO Media VALUES('M0005', 'Movie', 'Mission Impossible', to_date('01-02-1999', 'dd-mm-yyyy'), 4,88737, 'English', 'great action');
 INSERT INTO Media VALUES('T0001', 'Episode', 'GOT2.2', to_date('01-02-1992', 'dd-mm-yyyy'), 5.5,44535, 'Spanish', 'Random People die');
 INSERT INTO Media VALUES('T0002', 'Episode', 'BreakingBad', to_date('01-02-1995', 'dd-mm-yyyy'), 9,53737, 'German', 'Makes blue drugs');
+INSERT INTO Media VALUES('T0003', 'Episode', 'Winter is Coming', to_date('04-17-2011', 'mm-dd-yyyy'), 9,3601, 'English', 'Ned Stark is torn');
+INSERT INTO Media VALUES('T0004', 'Episode', 'The Kingsroad', to_date('04-24-2011', 'mm-dd-yyyy'), 8.9,3605, 'English', 'Bran recovers');
+INSERT INTO Media VALUES('T0005', 'Episode', 'Lord Snow', to_date('05-01-2011', 'mm-dd-yyyy'), 8.8,3568, 'English', 'Jon begins training');
+INSERT INTO Media VALUES('T0006', 'Episode', 'Cripples and Broken Things', to_date('05-08-2011', 'mm-dd-yyyy'), 8.7,3401, 'English', 'Ned investigates a murder');
+INSERT INTO Media VALUES('T0007', 'Episode', 'The Wolf and the Lion', to_date('05-15-2011', 'mm-dd-yyyy'), 9.6,3690, 'English', 'Cat captures Tyrion');
+INSERT INTO Media VALUES('T0008', 'Episode', 'A Golden Crown', to_date('05-22-2011', 'mm-dd-yyyy'), 9.4,3675, 'English', 'Jaime runs the kingdom');
+INSERT INTO Media VALUES('T0009', 'Episode', 'You Win or You Die', to_date('05-29-2011', 'mm-dd-yyyy'), 7.9,3736, 'English', 'Robert gets hurt');
+INSERT INTO Media VALUES('T0010', 'Episode', 'The Pointy End', to_date('06-05-2011', 'mm-dd-yyyy'), 8.5,3797, 'English', 'The Lannisters press');
+INSERT INTO Media VALUES('T0011', 'Episode', 'Baelor', to_date('06-12-2011', 'mm-dd-yyyy'), 9,3858, 'English', 'Robb goes to war');
+INSERT INTO Media VALUES('T0012', 'Episode', 'Fire and Blood', to_date('06-19-2011', 'mm-dd-yyyy'), 8.7,3919, 'English', 'Robb gets revenge');
+INSERT INTO Media VALUES('T0013', 'Episode', 'The North Remembers', to_date('04-01-2012', 'mm-dd-yyyy'), 9.9,3980, 'English', 'Tyrion arrives at Kings Landing');
+INSERT INTO Media VALUES('T0014', 'Episode', 'The Night Lands', to_date('04-08-2012', 'mm-dd-yyyy'), 9.8,4041, 'English', 'Arya makes friends');
+INSERT INTO Media VALUES('T0015', 'Episode', 'What is Dead May Never Die', to_date('04-15-2012', 'mm-dd-yyyy'), 7.9,3600, 'English', 'Tyrion analyzes the council');
+INSERT INTO Media VALUES('T0016', 'Episode', 'Garden of Bones', to_date('04-22-2012', 'mm-dd-yyyy'), 8.3,3602, 'English', 'Baelish arrives to camp');
+INSERT INTO Media VALUES('T0017', 'Episode', 'The Ghost of Harrenhal', to_date('04-29-2012', 'mm-dd-yyyy'), 8.4,3604, 'English', 'Tyrion investigates a secret weapon');
+INSERT INTO Media VALUES('T0018', 'Episode', 'The Old Gods and the New', to_date('05-06-2012', 'mm-dd-yyyy'), 9.5,3590, 'English', 'Theon seizes control');
+INSERT INTO Media VALUES('T0019', 'Episode', 'A Man Without Honor', to_date('05-13-2012', 'mm-dd-yyyy'), 8.2,3576, 'English', 'Bran and Rickon escape');
+INSERT INTO Media VALUES('T0020', 'Episode', 'The Prince of Winterfell', to_date('05-20-2012', 'mm-dd-yyyy'), 9.1,3562, 'English', 'Stannis arrives to Kings Landing');
+INSERT INTO Media VALUES('T0021', 'Episode', 'BlackWater', to_date('05-27-2012', 'mm-dd-yyyy'), 9.2,3612, 'English', 'Stannis brings his army');
+INSERT INTO Media VALUES('T0022', 'Episode', 'Valar Moghulis', to_date('06-03-2012', 'mm-dd-yyyy'), 9.7,3614, 'English', 'Arya says farewall to Jaquen');
 
 --Movies
 INSERT INTO Movies VALUES('M0001', 'G');
@@ -13,7 +33,7 @@ INSERT INTO Movies VALUES('M0003', 'PG-13');
 INSERT INTO Movies VALUES('M0005', 'R');
 
 --TV Shows
-INSERT INTO TV_Shows VALUES(0, 'Game of Thrones',7.9, '4');
+INSERT INTO TV_Shows VALUES(0, 'Game of Thrones',9.6, '2');
 INSERT INTO TV_Shows VALUES(1, 'Friends',4.5, '1');
 INSERT INTO TV_Shows VALUES(2, 'Stranger Things',5.8, '4');
 INSERT INTO TV_Shows VALUES(3, 'Narcos',8.6, '3');
@@ -22,6 +42,28 @@ INSERT INTO TV_Shows VALUES(5, 'Arrow',7, '6');
 INSERT INTO TV_Shows VALUES(6, 'Flash',7.2, '8');
 
 --TV Episodes
+INSERT INTO TV_Episodes VALUES('T0001', 0, 'TV-MA', 2, 2);
+INSERT INTO TV_Episodes VALUES('T0002', 3, 'TV-G', 4, 7);
+INSERT INTO TV_Episodes VALUES('T0003', 0, 'TV-MA', 1, 1);
+INSERT INTO TV_Episodes VALUES('T0004', 0, 'TV-MA', 1, 2);
+INSERT INTO TV_Episodes VALUES('T0005', 0, 'TV-MA', 1, 3);
+INSERT INTO TV_Episodes VALUES('T0006', 0, 'TV-MA', 1, 4);
+INSERT INTO TV_Episodes VALUES('T0007', 0, 'TV-MA', 1, 5);
+INSERT INTO TV_Episodes VALUES('T0008', 0, 'TV-MA', 1, 6);
+INSERT INTO TV_Episodes VALUES('T0009', 0, 'TV-MA', 1, 7);
+INSERT INTO TV_Episodes VALUES('T0010', 0, 'TV-MA', 1, 8);
+INSERT INTO TV_Episodes VALUES('T0011', 0, 'TV-MA', 1, 9);
+INSERT INTO TV_Episodes VALUES('T0012', 0, 'TV-MA', 1, 10);
+INSERT INTO TV_Episodes VALUES('T0013', 0, 'TV-MA', 2, 1);
+INSERT INTO TV_Episodes VALUES('T0014', 0, 'TV-MA', 2, 2);
+INSERT INTO TV_Episodes VALUES('T0015', 0, 'TV-MA', 2, 3);
+INSERT INTO TV_Episodes VALUES('T0016', 0, 'TV-MA', 2, 4);
+INSERT INTO TV_Episodes VALUES('T0017', 0, 'TV-MA', 2, 5);
+INSERT INTO TV_Episodes VALUES('T0018', 0, 'TV-MA', 2, 6);
+INSERT INTO TV_Episodes VALUES('T0019', 0, 'TV-MA', 2, 7);
+INSERT INTO TV_Episodes VALUES('T0020', 0, 'TV-MA', 2, 8);
+INSERT INTO TV_Episodes VALUES('T0021', 0, 'TV-MA', 2, 9);
+INSERT INTO TV_Episodes VALUES('T0022', 0, 'TV-MA', 2, 10);
 
 --Genres
 INSERT INTO Genres VALUES('M0001', 'Y', 'N', 'Y', 'Y', 'Y');
@@ -74,7 +116,7 @@ INSERT INTO Accounts VALUES('A001', 'mdugan', 'ma@gmail.com', 2, 'Y', to_date('0
 INSERT INTO Accounts VALUES('A002', 'watcher12', 'watch@gmail.com', 1, 'Y',to_date('03-08-2022', 'dd-mm-yyyy'));
 INSERT INTO Accounts VALUES('A003', 'll33', 'Affleck@gmail.com', 3, 'N', to_date('03-12-2022', 'dd-mm-yyyy'));
 INSERT INTO Accounts VALUES('A004', 'Quentin', 'Tarantino@gmail.com', 3, 'N', to_date('03-12-2022', 'dd-mm-yyyy'));
-INSERT INTO Accounts VALUES('A005', 'Roger', 'Deakins@gmail.com', 4, 'Y', to_date('03-12-2022', 'dd-mm-yyyy'));--Profiles
+INSERT INTO Accounts VALUES('A005', 'Roger', 'Deakins@gmail.com', 4, 'Y', to_date('03-12-2022', 'dd-mm-yyyy'));
 
 --Profile
 INSERT INTO Profile VALUES(1, 'A002', 'Bill', 21, 'M');
@@ -117,7 +159,6 @@ INSERT INTO TV_Preferences VALUES(5,3, 'Y');
 --Acts In
 INSERT INTO ACTSIN VALUES(1, 'M0001');
 INSERT INTO ACTSIN VALUES(2, 'M0001');
-INSERT INTO ACTSIN VALUES(3,  'M0001');
+INSERT INTO ACTSIN VALUES(3, 'M0001');
 INSERT INTO ACTSIN VALUES(4, 'M0003');
 INSERT INTO ACTSIN VALUES(5, 'T0001');
-
