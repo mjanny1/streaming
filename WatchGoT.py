@@ -46,6 +46,7 @@ while True:
         break
 print ("You watched for " + str(time_watched) + " seconds")
 
+time.sleep(1)
 
 ## Create Insert String
 # Create View ID
@@ -67,7 +68,26 @@ insert="INSERT INTO Views VALUES(" + str(view_id) + ", " + profile_id + ",'" + m
 c.execute(insert)
 result = conn.commit()
 if result == None:
-    print ("View successfully stored in Database")
+    print ("View successfully stored in Database!\n")
+
+time.sleep(1)
+
+liked = input("Did you enjoy the media?[Y/N]")
+time.sleep(1)
+if liked == "Y": 
+    print ("We are happy you enjoyed it!\n")
+elif liked == "N": 
+    print ("We will do better next time!\n")
+else: 
+    print("Not a valid response\n")
+    exit (1)
+
+media_pref_insert="INSERT INTO Media_Preferences VALUES( " + profile_id + ",'" + media_id + "', '" + liked + "')"
+c.execute(media_pref_insert)
+result = conn.commit()
+time.sleep(1)
+if result == None:
+    print ("Preference successfully stored in Database!\n")
 
 print ("Thanks for Watching!")
 conn.close()
