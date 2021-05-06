@@ -66,7 +66,7 @@ profile_id = str(profile_id)
 insert="INSERT INTO Views VALUES(" + str(view_id) + ", " + profile_id + ",'" + media_id + "', to_date('" + str(todays_date) + "', 'yyyy-mm-dd'),'Philadelphia', " + str(time_watched) + ")"
 c.execute(insert)
 result = conn.commit()
-if result == 0:
+if result == None:
     print ("View successfully stored in Database")
 
 print ("Thanks for Watching!")
