@@ -1,10 +1,9 @@
 --Media
-INSERT INTO Media VALUES('M0001', 'Movie', 'Fast And Furious', to_date('01-02-1996', 'mm-dd-yyyy'), 1,199772, 'English', 'good movie');
-INSERT INTO Media VALUES('M0002', 'Movie', 'John Wick', to_date('01-02-1997', 'mm-dd-yyyy'), 2,736363, 'Spanish', 'great one');
-INSERT INTO Media VALUES('M0003', 'Movie', 'Finding Nemo', to_date('01-02-1998', 'mm-dd-yyyy'), 3,2378328, 'German', 'a fish movie');
-INSERT INTO Media VALUES('M0005', 'Movie', 'Mission Impossible', to_date('01-02-1999', 'mm-dd-yyyy'), 4,88737, 'English', 'great action');
-INSERT INTO Media VALUES('T0001', 'Episode', 'GOT2.2', to_date('01-02-1992', 'mm-dd-yyyy'), 5.5,44535, 'Spanish', 'Random People die');
-INSERT INTO Media VALUES('T0002', 'Episode', 'BreakingBad', to_date('01-02-1995', 'mm-dd-yyyy'), 9,53737, 'German', 'Makes blue drugs');
+INSERT INTO Media VALUES('M0001', 'Movie', 'Fast And Furious', to_date('01-02-1996', 'dd-mm-yyyy'), 1,199772, 'English', 'good movie');
+INSERT INTO Media VALUES('M0002', 'Movie', 'John Wick', to_date('01-02-1997', 'dd-mm-yyyy'), 2,736363, 'Spanish', 'great one');
+INSERT INTO Media VALUES('M0003', 'Movie', 'Finding Nemo', to_date('01-02-1998', 'dd-mm-yyyy'), 3,2378328, 'German', 'a fish movie');
+INSERT INTO Media VALUES('M0005', 'Movie', 'Mission Impossible', to_date('01-02-1999', 'dd-mm-yyyy'), 4,88737, 'English', 'great action');
+INSERT INTO Media VALUES('T0002', 'Episode', 'BreakingBad', to_date('01-02-1995', 'dd-mm-yyyy'), 9,53737, 'German', 'Makes blue drugs');
 INSERT INTO Media VALUES('T0003', 'Episode', 'Winter is Coming', to_date('04-17-2011', 'mm-dd-yyyy'), 9,3601, 'English', 'Ned Stark is torn');
 INSERT INTO Media VALUES('T0004', 'Episode', 'The Kingsroad', to_date('04-24-2011', 'mm-dd-yyyy'), 8.9,3605, 'English', 'Bran recovers');
 INSERT INTO Media VALUES('T0005', 'Episode', 'Lord Snow', to_date('05-01-2011', 'mm-dd-yyyy'), 8.8,3568, 'English', 'Jon begins training');
