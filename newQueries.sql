@@ -160,3 +160,107 @@ join views v on m.media_id = v.media_id
 join profile p on mp.profile_id = p.profile_id 
 join accounts a on p.account_id = a.account_id where m.name = 'The Old Gods and the New';
 
+
+--Adding a newly released movie
+create or replace procedure Add_new_Movie_release
+is 
+V_Media_ID       VARCHAR(10); 
+V_Media_Type     VARCHAR(7);   
+V_Name           VARCHAR(60);  
+V_Date_Released  DATE;         
+V_IMDB_Rating    DECIMAL(3,1); 
+V_Length_Seconds INTEGER;     
+V_Language       VARCHAR(20);  
+V_Description    VARCHAR(300);
+V_Industry_Person_ID NUMBER(10);
+V_MPA_Rating    CHAR(8);
+
+
+Begin
+
+V_Media_ID := 'M0025';    
+V_Media_Type:= 'Movie';    
+V_Name       :=  'Venom';    
+V_Date_Released := to_date('12-02-2020', 'mm-dd-yyyy');
+V_IMDB_Rating     := 8.2;
+V_Length_Seconds  := 4532;    
+V_Language         := 'English';
+V_Description    := 'journalist Brock gains superpowers after being bound to an alien symbiote whose species plans to invade Earth';
+V_Industry_Person_ID := 3;
+V_MPA_Rating    := 'R';
+
+Insert into media values (V_Media_ID,V_Media_Type,V_Name,V_Date_Released,V_IMDB_Rating,V_Length_Seconds,V_Language,V_Description);
+insert into directs values (V_Industry_Person_ID,V_Media_ID);
+insert into movies values (V_Media_ID,V_MPA_Rating);
+ commit;
+end;
+
+
+--Adding newly released Tv_episode
+
+create or replace procedure Add_new_TV_release
+is 
+V_Media_ID       VARCHAR(10); 
+V_Media_Type     VARCHAR(7);   
+V_Name           VARCHAR(60);  
+V_Date_Released  DATE;         
+V_IMDB_Rating    DECIMAL(3,1); 
+V_Length_Seconds INTEGER;     
+V_Language       VARCHAR(20);  
+V_Description    VARCHAR(300);
+V_Industry_Person_ID NUMBER(10);
+V_TV_Show_ID             INTEGER ;
+V_TV_Parental_Guidelines VARCHAR(5) ;
+V_Season_Number          INTEGER ;
+V_Season_Episode_Number  INTEGER  ;
+
+Begin
+
+V_Media_ID   :=    'T0025'; 
+V_Media_Type   :=  'Episode';   
+V_Name          := 'Battle of Bastards';  
+V_Date_Released  := to_date('02-09-2018', 'mm-dd-yyyy');         
+V_IMDB_Rating   := 9.3; 
+V_Length_Seconds := 3462;     
+V_Language       := 'English';  
+V_Description    := 'Jon Snow and Ramsay Bolton face off in a battle for control of Winterfell.';
+V_Industry_Person_ID := 5;
+V_TV_Show_ID            := 0 ;
+V_TV_Parental_Guidelines := 'TV-MA' ;
+V_Season_Number         := 6 ;
+V_Season_Episode_Number  := 9  ;
+
+Insert into media values (V_Media_ID,V_Media_Type,V_Name,V_Date_Released,V_IMDB_Rating,V_Length_Seconds,V_Language,V_Description);
+insert into directs values (V_Industry_Person_ID,V_Media_ID);
+
+insert into tv_episodes values (V_Media_ID,V_TV_Show_ID,V_TV_Parental_Guidelines,V_Season_Number,V_Season_Episode_Number);
+commit;
+end;
+
+--Upgrading the subscriptions of a user
+ create or replace procedure update_subscription
+is 
+begin
+update accounts set subscription_id = 4 where account_id = 'A002'; 
+commit;
+end;
+
+--running add_new_movie_release
+BEGIN
+  add_new_movie_release;
+END;
+--running Add_new_TV_release
+
+BEGIN
+  Add_new_TV_release;
+END;
+--running   update_subscription
+BEGIN
+  update_subscription;
+END;
+
+
+
+
+
+
