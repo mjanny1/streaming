@@ -160,6 +160,11 @@ join views v on m.media_id = v.media_id
 join profile p on mp.profile_id = p.profile_id 
 join accounts a on p.account_id = a.account_id where m.name = 'The Old Gods and the New';
 
+--finding the count of movies based on MPA rating
+
+Select count(media.Name), Movies.MPA_rating from media 
+inner join movies on media.media_id = movies.media_id group by movies.mpa_rating ORDER BY count(media.Name) desc;
+
 
 --Adding a newly released movie
 create or replace procedure Add_new_Movie_release
